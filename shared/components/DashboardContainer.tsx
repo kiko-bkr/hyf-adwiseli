@@ -1,7 +1,7 @@
 'use client';
 import { useState } from 'react';
 // Suppose the hook is imported from this path:
-import useDashBoardData from '@/hooks/useDashBoardData';
+import useDashBoardData from '../hooks/useDashBoardData';
 
 function DashboardContainer() {
   // Determine user type (brand or influencer)
