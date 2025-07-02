@@ -1,35 +1,32 @@
 'use client';
 import { useState } from 'react';
-// Suppose the hook is imported from this path:
-import useDashBoardData from '../hooks/useDashBoardData';
+// import useDashBoardData from '../hooks/useDashBoardData'; // Temporarily disabled - hook not merged
 
 function DashboardContainer() {
-  // Determine user type (brand or influencer)
   const [userType, setUserType] = useState('brand');
 
-  // Call the hook with userType, destructuring 'cards' instead of 'data'
-  const { cards, loading, error } = useDashBoardData(userType);
+  // Placeholder data until useDashBoardData is merged
+  const cards = [
+    { title: 'Total Campaigns', value: 12 },
+    { title: 'Active Influencers', value: 34 },
+    { title: 'Pending Approvals', value: 5 },
+  ];
+  const loading = false;
+  const error = null;
+
+  // const { cards, loading, error } = useDashBoardData(userType); // To be used when hook is ready
 
   return (
     <div className="flex min-h-screen bg-gray-100">
-      {/* Main Content */}
       <main className="flex-1 p-8">
         <div className="bg-white rounded-xl p-8 shadow">
           <div className="flex justify-between items-center mb-8">
             <h1 className="text-xl font-bold">Statistics Overview</h1>
           </div>
 
-          {/* Loading state */}
-          {loading && (
-            <div className="text-gray-500">Loading...</div>
-          )}
+          {loading && <div className="text-gray-500">Loading...</div>}
+          {error && <div className="text-red-600">Error: {error.message || 'Something went wrong'}</div>}
 
-          {/* Error state */}
-          {error && (
-            <div className="text-red-600">Error: {error.message || 'Something went wrong'}</div>
-          )}
-
-          {/* Display cards if they exist */}
           {cards && (
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {cards.map((card, index) => (
@@ -48,4 +45,5 @@ function DashboardContainer() {
     </div>
   );
 }
+
 export default DashboardContainer;
