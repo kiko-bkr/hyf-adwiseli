@@ -22,16 +22,33 @@ export interface BrandDashboardData {
     comments: number
     shares: number
   }
+  reach: number
+  impressions: number
+  engagementCount: number
+  engagementRate: number
+  videoWatchTime: number // in seconds
+  profileClicks: number
+  audienceAge: string
+  deltas: {
+    reach: number
+    engagement: number
+    engagementRate: number
+    impressions: number
+    videoWatchTime: number
+    profileClicks: number
+  }
 }
 
-export default async function fetchBrandData(brandId: string): Promise<BrandDashboardData> {
+export default async function fetchBrandData(
+  brandId: string
+): Promise<BrandDashboardData> {
   try {
-    const res = await http.get(`/api/brand/${brandId}/dashboard`)
+    const res = await http.get(`/${brandId}/dashboard`)
     const data = res.data
 
     return {
       id: data.id,
-      name: data.name ?? 'Ukendt',
+      name: data.name ?? 'Unknown',
       campaigns: data.campaigns ?? 0,
       followers: data.followers ?? 0,
       roi: data.roi ?? 0,
@@ -43,7 +60,22 @@ export default async function fetchBrandData(brandId: string): Promise<BrandDash
         likes: 0,
         comments: 0,
         shares: 0,
-      }
+      },
+      reach: data.reach ?? 0,
+      impressions: data.impressions ?? 0,
+      engagementCount: data.engagementCount ?? 0,
+      engagementRate: data.engagementRate ?? 0,
+      videoWatchTime: data.videoWatchTime ?? 0,
+      profileClicks: data.profileClicks ?? 0,
+      audienceAge: data.audienceAge ?? 'Unknown',
+      deltas: data.deltas ?? {
+        reach: 0,
+        engagement: 0,
+        engagementRate: 0,
+        impressions: 0,
+        videoWatchTime: 0,
+        profileClicks: 0,
+      },
     }
   } catch (err) {
     throw getError(err)
